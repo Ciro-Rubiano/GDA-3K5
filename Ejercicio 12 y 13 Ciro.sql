@@ -22,3 +22,10 @@ from empleados E, region R, depto D
 where E.depto_id = D.id
 and D.id_region = R.id
 and E.porcent_comision is not null
+
+--d
+select E.nombre, E.apellido, E.salario,  D.id, D.nombre
+from empleados E, depto D
+where (D.id = 44 and E.salario >= 1000)
+or D.id = 42
+order by E.salario
