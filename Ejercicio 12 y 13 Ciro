@@ -11,3 +11,7 @@ select E.nombre, E.depto_id,  D.id, D.nombre
 from empleados E, depto D
 where E.depto_id = D.id
 
+--b
+select D.id as 'ID DEPARTAMENTO', R.id as 'id Zona', R.name
+from depto D, region R
+where D.id_region = R.id
