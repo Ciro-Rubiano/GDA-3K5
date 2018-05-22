@@ -1,0 +1,13 @@
+use GDA
+--12
+select E.nombre, E.apellido, E.fecha_ingreso
+from empleados E
+where E.fecha_ingreso between convert(datetime, '09/05/1991', 103) and CONVERT(datetime, '17/06/1991', 103)
+
+
+--13
+--a
+select E.nombre, E.depto_id,  D.id, D.nombre
+from empleados E, depto D
+where E.depto_id = D.id
+
