@@ -45,14 +45,15 @@ and C.id = P.id_cliente
 group by E.apellido, C.id, C.nombre
 
 --g
-select PR.id, PR.nombre, SUM(I.cant_en_stock)
+select PR.id, PR.nombre, SUM(I.cant_en_stock) as "Stock Total"
 from producto PR, inventario I, pedido P, item IT
 where I.Id_producto = PR.id
-and 5 <= (select COUNT(I.id_almacenes)
-		  from inventario I
-		  where PR.id = I.Id_producto
-		  group by I.Id_producto)
+and 5 <= (select COUNT(INV.id_almacenes)
+		  from inventario INV
+		  where PR.id = INV.Id_producto
+		  group by INV.Id_producto)
 and PR.id = It.Id_producto
 and IT.ord_id = P.id
 and month(P.fecha_pedido) = 08
 group by PR.id, PR.nombre
+
