@@ -1,4 +1,5 @@
-use GDA
+use Lucio_71983
+
 
 --a
 select E.nombre, E.apellido, DAY(E.fecha_ingreso) as "DIA"
@@ -51,5 +52,7 @@ and 5 <= (select COUNT(I.id_almacenes)
 		  from inventario I
 		  where PR.id = I.Id_producto
 		  group by I.Id_producto)
---falta hacer la parte del mes de agosto
+and PR.id = It.Id_producto
+and IT.ord_id = P.id
+and month(P.fecha_pedido) = 08
 group by PR.id, PR.nombre
