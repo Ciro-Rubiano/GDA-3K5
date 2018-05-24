@@ -50,10 +50,18 @@ from producto PR, inventario I, pedido P, item IT
 where I.Id_producto = PR.id
 and 5 <= (select COUNT(INV.id_almacenes)
 		  from inventario INV
-		  where PR.id = INV.Id_producto
-		  group by INV.Id_producto)
+		  where PR.id = INV.Id_producto)
 and PR.id = It.Id_producto
 and IT.ord_id = P.id
 and month(P.fecha_pedido) = 08
 group by PR.id, PR.nombre
 
+--h
+select C.nombre, count(P.id_cliente)
+from clientes C, pedido P
+where C.id = P.id_cliente
+and 6 <= (select count(IT.item_id)
+			from item IT
+			where IT.ord_id = P.id
+			group by IT.ord_id)
+group by C.nombre
