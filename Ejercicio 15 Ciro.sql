@@ -43,10 +43,18 @@ and (E.depto_id = D.id and (D.id_region = 1 or D.id_region = 2))
 and C.id_vendedor = E.id
 group by E.apellido, C.id, C.nombre
 
+
 --g
-select  PR.id, PR.nombre, SUM(I.cant_en_stock) as "STOCK"
-from producto PR, inventario I, pedido P join item It on ()
-where I.Id_producto = PR.id
-and 
+select  PR.id as "ID PRODUCTO", PR.nombre, SUM(I.cant_en_stock) as "STOCK"
+from inventario I join producto PR on (I.Id_producto = PR.id)
+
+where 5 >= (select COUNT(inventario.id_almacenes)
+			from inventario
+			where inventario.Id_producto = PR.id)
+and PR.id in (select IT.Id_producto
+				from pedido PED join item IT on (IT.ord_id = PED.id) 
+				where MONTH(PED.fecha_pedido) = 08)
+
 group by PR.id, PR.nombre
-having 5>= COUNT(I.id_almacenes)
+order by PR.id
+
