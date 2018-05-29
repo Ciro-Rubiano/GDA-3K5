@@ -62,6 +62,5 @@ from clientes C, pedido P
 where C.id = P.id_cliente
 and 6 < (select count(DISTINCT IT.item_id)
 			from item IT
-			where IT.ord_id = P.id
-			group by IT.ord_id)
+			where IT.ord_id = P.id)
 group by C.nombre
