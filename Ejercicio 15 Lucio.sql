@@ -1,4 +1,4 @@
-use Lucio_71983
+use GDA
 
 
 --a
@@ -37,7 +37,7 @@ and (E.depto_id in (select T.depto_id
 				  where T.apellido like '%t%'))
 				  
 --f
-select E.apellido "Apellido representante", C.nombre "nombre cliente", count(P.id_cliente)
+select E.apellido "Apellido representante", C.nombre "nombre cliente", count(*)
 from empleados E, depto D, clientes C, pedido P
 where (E.depto_id = D.id and (D.id_region = 1 or D.id_region = 2))
 and C.id_vendedor = E.id
@@ -57,10 +57,22 @@ and month(P.fecha_pedido) = 08
 group by PR.id, PR.nombre
 
 --h
-select C.nombre, count(P.id_cliente)
+select C.nombre, count(*)
 from clientes C, pedido P
 where C.id = P.id_cliente
 and 6 < (select count(DISTINCT IT.item_id)
 			from item IT
 			where IT.ord_id = P.id)
 group by C.nombre
+
+--i
+select C.id_region, C.nombre, COUNT(*) as "Cant. pedidos"
+from clientes C, pedido P
+where C.id = P.id_cliente
+group by C.nombre, C.id, C.id_region
+having COUNT(*) >= ALL (select COUNT(*)
+						from clientes CL, pedido PE
+						where CL.id = PE.id_cliente
+						and C.id_region = CL.id_region
+						group by CL.id)
+order by C.id_region
