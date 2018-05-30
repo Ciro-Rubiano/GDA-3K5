@@ -48,7 +48,7 @@ group by E.apellido, C.id, C.nombre
 select PR.id, PR.nombre, SUM(I.cant_en_stock) as "Stock Total"
 from producto PR, inventario I, pedido P, item IT
 where I.Id_producto = PR.id
-and 5 <= (select COUNT(INV.id_almacenes)
+and 5 <= (select COUNT(*)
 		  from inventario INV
 		  where PR.id = INV.Id_producto)
 and PR.id = It.Id_producto
