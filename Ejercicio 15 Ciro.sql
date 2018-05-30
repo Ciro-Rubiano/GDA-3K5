@@ -55,3 +55,13 @@ and IT.Id_producto = PR.id
 and IT.ord_id = PED.id
 and 08 = MONTH(PED.fecha_pedido)
 group by PR.id, PR.nombre
+			    
+			    
+--h
+select C.nombre, COUNT(*) as 'Cantidad de Pedidos'
+from pedido P join clientes C on( P.id_cliente = C.id)
+where 6 < (select COUNT(IT.item_id)
+			from item IT
+			where IT.ord_id = P.id)
+group by C.nombre
+order by COUNT(P.id)
