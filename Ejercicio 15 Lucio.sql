@@ -64,6 +64,7 @@ and 6 < (select count(DISTINCT IT.item_id)
 			from item IT
 			where IT.ord_id = P.id)
 group by C.nombre
+order by count(*)
 
 --i
 select C.id_region, C.nombre, COUNT(*) as "Cant. pedidos"
