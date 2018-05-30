@@ -45,16 +45,13 @@ group by E.apellido, C.id, C.nombre
 
 
 --g
-select  PR.id as "ID PRODUCTO", PR.nombre, SUM(I.cant_en_stock) as "STOCK"
-from inventario I join producto PR on (I.Id_producto = PR.id)
-
-where 5 >= (select COUNT(inventario.id_almacenes)
-			from inventario
-			where inventario.Id_producto = PR.id)
-and PR.id in (select IT.Id_producto
-				from pedido PED join item IT on (IT.ord_id = PED.id) 
-				where MONTH(PED.fecha_pedido) = 08)
-
+select PR.id, PR.nombre, SUM(I.cant_en_stock) as 'Cantidad de Stock'
+from producto PR join Inventario I on (PR.id = I.id_producto), item IT, pedido PED
+where 5 <= (select COUNT(*)
+			from inventario INV
+			where INV.Id_producto = PR.id
+			group by INV.Id_producto)
+and IT.Id_producto = PR.id
+and IT.ord_id = PED.id
+and 08 = MONTH(PED.fecha_pedido)
 group by PR.id, PR.nombre
-order by PR.id
-
